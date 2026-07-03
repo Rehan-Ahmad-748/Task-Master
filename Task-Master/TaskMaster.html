@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TaskMaster — Student Task Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ===== AUTH PAGES ===== -->
+<div id="page-auth" class="page active">
+  <div class="auth-split">
+    <div class="auth-brand">
+      <div class="auth-brand-bg">
+        <div class="bg-orb orb1"></div>
+        <div class="bg-orb orb2"></div>
+        <div class="bg-orb orb3"></div>
+        <div class="grid-overlay"></div>
+      </div>
+      <div class="brand-inner">
+        <div class="logo-mark">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M6 8h12M6 14h8M6 20h10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="24" cy="20" r="6" stroke="white" stroke-width="2.5"/>
+            <path d="M22 20l1.5 1.5L26 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="brand-name">TaskMaster</h1>
+        <p class="brand-tagline">Your academic life,<br>finally organized.</p>
+        <div class="brand-feature-list">
+          <div class="brand-feature"><div class="feature-dot"></div><span>Course &amp; semester management</span></div>
+          <div class="brand-feature"><div class="feature-dot"></div><span>Task tracking &amp; deadlines</span></div>
+          <div class="brand-feature"><div class="feature-dot"></div><span>Calendar &amp; list views</span></div>
+          <div class="brand-feature"><div class="feature-dot"></div><span>Progress analytics &amp; insights</span></div>
+        </div>
+        <div class="brand-stats">
+          <div class="stat-pill"><span class="stat-n">3</span><span class="stat-l">Sprints</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-pill"><span class="stat-n">7</span><span class="stat-l">Modules</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-pill"><span class="stat-n">∞</span><span class="stat-l">Tasks</span></div>
+        </div>
+        <div class="brand-badge">Iteration 3 — Analytics &amp; Notifications</div>
+      </div>
+    </div>
+
+    <div class="auth-forms">
+      <div class="auth-forms-inner">
+        <!-- Login Form -->
+        <div id="form-login" class="auth-card active">
+          <div class="auth-card-header">
+            <div class="auth-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            </div>
+            <h2>Welcome back</h2>
+            <p>Sign in to continue to TaskMaster</p>
+          </div>
+          <div class="demo-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Demo: <strong>demo@university.edu</strong> / <strong>demo123</strong>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input type="email" id="login-email" placeholder="you@university.edu" autocomplete="email"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/>
+              <span class="input-toggle" onclick="togglePass('login-password', this)">Show</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="checkbox-label"><input type="checkbox"/><span>Remember me</span></label>
+            <a href="#" class="link-sm" onclick="showForgot()">Forgot password?</a>
+          </div>
+          <div id="login-error" class="form-error hidden"></div>
+          <button class="btn-primary" onclick="handleLogin()">Sign In <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <p class="auth-switch">Don't have an account? <a href="#" onclick="switchForm('register')">Create one</a></p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="form-register" class="auth-card">
+          <div class="auth-card-header">
+            <div class="auth-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            </div>
+            <h2>Join TaskMaster</h2>
+            <p>Create your student account today</p>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label>First Name</label><input type="text" id="reg-fname" placeholder="Rehan"/></div>
+            <div class="form-group"><label>Last Name</label><input type="text" id="reg-lname" placeholder="Ahmed"/></div>
+          </div>
+          <div class="form-group">
+            <label>University Email</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input type="email" id="reg-email" placeholder="you@university.edu"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Academic Year</label>
+            <select id="reg-year"><option value="">Select your year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="reg-password" placeholder="Min. 8 characters"/>
+              <span class="input-toggle" onclick="togglePass('reg-password', this)">Show</span>
+            </div>
+          </div>
+          <div id="reg-error" class="form-error hidden"></div>
+          <button class="btn-primary" onclick="handleRegister()">Create Account <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <p class="auth-switch">Already have an account? <a href="#" onclick="switchForm('login')">Sign in</a></p>
+        </div>
+
+        <!-- Forgot Password -->
+        <div id="form-forgot" class="auth-card">
+          <div class="auth-card-header">
+            <div class="auth-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h5v4l4-4h5l4-4V2z"/><line x1="9" y1="9" x2="9" y2="9"/><line x1="12" y1="9" x2="12" y2="9"/><line x1="15" y1="9" x2="15" y2="9"/></svg>
+            </div>
+            <h2>Reset Password</h2>
+            <p>We'll send a reset link to your email</p>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <div class="input-wrap">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input type="email" id="forgot-email" placeholder="you@university.edu"/>
+            </div>
+          </div>
+          <div id="forgot-msg" class="form-success hidden"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Reset link sent! Check your inbox.</div>
+          <button class="btn-primary" onclick="handleForgot()">Send Reset Link <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+          <p class="auth-switch"><a href="#" onclick="switchForm('login')">← Back to login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="page-app" class="page">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo-mark sm">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+          <path d="M6 8h12M6 14h8M6 20h10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="24" cy="20" r="6" stroke="white" stroke-width="2.5"/>
+          <path d="M22 20l1.5 1.5L26 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span>TaskMaster</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a class="nav-item active" onclick="showView('dashboard')" id="nav-dashboard">
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+        Dashboard
+      </a>
+      <a class="nav-item" onclick="showView('courses')" id="nav-courses">
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        My Courses
+        <span class="nav-badge" id="nav-courses-count">0</span>
+      </a>
+      <a class="nav-item" onclick="showView('tasks')" id="nav-tasks">
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Tasks
+        <span class="nav-badge" id="nav-tasks-count">0</span>
+      </a>
+      <a class="nav-item" onclick="showView('calendar')" id="nav-calendar">
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        Calendar
+      </a>
+      <a class="nav-item" onclick="showView('profile')" id="nav-profile">
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></span>
+        Profile
+      </a>
+
+      <div class="nav-section-label" style="margin-top:16px">Insights</div>
+      <a class="nav-item" onclick="showView('analytics')" id="nav-analytics">
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span>
+        Analytics
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user" onclick="showView('profile')">
+        <div class="user-avatar" id="sidebar-avatar">R</div>
+        <div class="user-meta">
+          <div class="user-name" id="sidebar-name">Rehan Ahmed</div>
+          <div class="user-role">Student</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--text3);flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <button class="btn-logout" onclick="handleLogout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
+        <div class="breadcrumb-wrap">
+          <span class="breadcrumb-root">TaskMaster</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+          <span class="breadcrumb" id="breadcrumb">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <!-- Search Bar -->
+        <div class="search-bar" id="global-search-wrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="global-search" placeholder="Search tasks…" oninput="handleGlobalSearch(this.value)"/>
+          <div id="search-dropdown" class="search-dropdown hidden"></div>
+        </div>
+        <!-- Notification Bell -->
+        <button class="notif-btn" onclick="toggleNotifPanel()" id="notif-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          <span class="notif-dot" id="notif-dot"></span>
+        </button>
+        <div class="topbar-avatar" id="topbar-avatar" onclick="showView('profile')" title="View profile">R</div>
+      </div>
+    </header>
+
+    <!-- Notification Panel -->
+    <div id="notif-panel" class="notif-panel hidden">
+      <div class="notif-panel-header">
+        <h3>Notifications</h3>
+        <button onclick="clearAllNotifs()" class="notif-clear-btn">Clear All</button>
+      </div>
+      <div id="notif-list" class="notif-list"></div>
+    </div>
+
+    <!-- ===== DASHBOARD VIEW ===== -->
+    <section id="view-dashboard" class="view active">
+      <div class="view-header">
+        <div>
+          <h2 class="view-title" id="dash-greeting">Good morning, Rehan!</h2>
+          <p class="view-subtitle">Here's your academic overview for <span id="dash-semester-inline">Spring 2026</span></p>
+        </div>
+        <button class="btn-primary sm" onclick="openTaskModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Task
+        </button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card s1">
+          <div class="stat-icon-wrap s1"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="dash-courses">0</div><div class="stat-label">Enrolled Courses</div></div>
+        </div>
+        <div class="stat-card s2">
+          <div class="stat-icon-wrap s2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="dash-completed">0</div><div class="stat-label">Tasks Completed</div></div>
+        </div>
+        <div class="stat-card s3">
+          <div class="stat-icon-wrap s3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="dash-pending">0</div><div class="stat-label">Pending Tasks</div></div>
+        </div>
+        <div class="stat-card s4">
+          <div class="stat-icon-wrap s4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="dash-overdue">0</div><div class="stat-label">Overdue</div></div>
+        </div>
+      </div>
+
+      <!-- Due Soon Banner -->
+      <div id="due-soon-banner" class="due-soon-banner hidden">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="due-soon-text"></span>
+      </div>
+
+      <div class="dash-bottom">
+        <!-- Upcoming Tasks -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Upcoming Tasks</h3>
+            <a href="#" onclick="showView('tasks')" class="link-sm">View all →</a>
+          </div>
+          <div id="dash-upcoming-list" class="upcoming-list"></div>
+        </div>
+
+        <!-- Course Progress -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>Course Progress</h3>
+          </div>
+          <div id="dash-progress-list" class="progress-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TASKS VIEW ===== -->
+    <section id="view-tasks" class="view">
+      <div class="view-header">
+        <div>
+          <h2 class="view-title">Tasks</h2>
+          <p class="view-subtitle">Manage all your academic tasks in one place</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="view-toggle">
+            <button class="view-toggle-btn active" id="toggle-list" onclick="switchTaskView('list')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              List
+            </button>
+            <button class="view-toggle-btn" id="toggle-board" onclick="switchTaskView('board')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              Board
+            </button>
+          </div>
+          <button class="btn-primary sm" onclick="openTaskModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Task
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter / Search bar -->
+      <div class="task-filter-bar">
+        <div class="task-search-wrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="task-search" placeholder="Search tasks…" oninput="applyTaskFilters()"/>
+        </div>
+        <input type="date" id="filter-date-from" class="filter-select filter-date" onchange="applyTaskFilters()" aria-label="Filter from date"/>
+        <input type="date" id="filter-date-to" class="filter-select filter-date" onchange="applyTaskFilters()" aria-label="Filter to date"/>
+        <select id="filter-course" onchange="applyTaskFilters()" class="filter-select">
+          <option value="">All Courses</option>
+        </select>
+        <select id="filter-priority" onchange="applyTaskFilters()" class="filter-select">
+          <option value="">All Priorities</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <select id="filter-type" onchange="applyTaskFilters()" class="filter-select">
+          <option value="">All Types</option>
+          <option value="Assignment">Assignment</option>
+          <option value="Quiz">Quiz</option>
+          <option value="Project">Project</option>
+          <option value="Exam">Exam</option>
+          <option value="Lab">Lab</option>
+          <option value="Other">Other</option>
+        </select>
+        <select id="filter-status" onchange="applyTaskFilters()" class="filter-select">
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="inprogress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="overdue">Overdue</option>
+        </select>
+        <button class="btn-outline sm" onclick="resetTaskFilters()">Reset</button>
+      </div>
+
+      <!-- Quick Filter Presets -->
+      <div class="filter-bar" style="margin-bottom:18px">
+        <span class="filter-label">Quick:</span>
+        <button class="filter-chip active" onclick="setPreset('all', this)">All</button>
+        <button class="filter-chip" onclick="setPreset('due-today', this)">Due Today</button>
+        <button class="filter-chip" onclick="setPreset('due-week', this)">Due This Week</button>
+        <button class="filter-chip" onclick="setPreset('high-priority', this)">High Priority</button>
+        <button class="filter-chip" onclick="setPreset('overdue', this)">Overdue</button>
+      </div>
+
+      <!-- List View -->
+      <div id="task-list-view">
+        <div id="task-list-container"></div>
+      </div>
+
+      <!-- Board View -->
+      <div id="task-board-view" style="display:none">
+        <div class="task-board">
+          <div class="board-col">
+            <div class="board-col-header">
+              <div class="board-col-dot" style="background:var(--orange)"></div>
+              <span>Pending</span>
+              <span class="board-col-count" id="board-pending-count">0</span>
+            </div>
+            <div class="board-col-body" id="board-pending"></div>
+          </div>
+          <div class="board-col">
+            <div class="board-col-header">
+              <div class="board-col-dot" style="background:var(--blue)"></div>
+              <span>In Progress</span>
+              <span class="board-col-count" id="board-inprogress-count">0</span>
+            </div>
+            <div class="board-col-body" id="board-inprogress"></div>
+          </div>
+          <div class="board-col">
+            <div class="board-col-header">
+              <div class="board-col-dot" style="background:var(--green)"></div>
+              <span>Completed</span>
+              <span class="board-col-count" id="board-completed-count">0</span>
+            </div>
+            <div class="board-col-body" id="board-completed-col"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CALENDAR VIEW ===== -->
+    <section id="view-calendar" class="view">
+      <div class="view-header">
+        <div>
+          <h2 class="view-title">Calendar</h2>
+          <p class="view-subtitle">View all tasks on their due dates</p>
+        </div>
+        <button class="btn-primary sm" onclick="openTaskModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Task
+        </button>
+      </div>
+      <div class="calendar-wrap">
+        <div class="calendar-nav">
+          <button class="btn-outline sm" onclick="changeMonth(-1)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <span class="calendar-month-title" id="cal-month-title">April 2026</span>
+          <button class="btn-outline sm" onclick="changeMonth(1)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="calendar-grid-wrap">
+          <div class="cal-day-headers">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+        <div id="cal-day-detail" class="cal-day-detail hidden">
+          <div class="cal-day-detail-header">
+            <h3 id="cal-detail-title">Tasks for …</h3>
+            <button class="modal-close" onclick="document.getElementById('cal-day-detail').classList.add('hidden')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div id="cal-detail-list" class="cal-detail-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COURSES VIEW ===== -->
+    <section id="view-courses" class="view">
+      <div class="view-header">
+        <div>
+          <h2 class="view-title">My Courses</h2>
+          <p class="view-subtitle">Manage your enrolled courses for this semester</p>
+        </div>
+        <button class="btn-primary sm" onclick="openCourseModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Course
+        </button>
+      </div>
+      <div class="filter-bar">
+        <span class="filter-label">Semester:</span>
+        <button class="filter-chip active" onclick="filterCourses('all', this)">All</button>
+        <button class="filter-chip" onclick="filterCourses('Fall 2025', this)">Fall 2025</button>
+        <button class="filter-chip" onclick="filterCourses('Spring 2026', this)">Spring 2026</button>
+        <button class="filter-chip" onclick="filterCourses('Summer 2026', this)">Summer 2026</button>
+      </div>
+      <div id="courses-grid" class="courses-grid">
+        <div class="empty-state" id="courses-empty">
+          <div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+          <h3>No courses yet</h3>
+          <p>Add your first course to start organizing your semester</p>
+          <button class="btn-primary sm" onclick="openCourseModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add First Course
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROFILE VIEW ===== -->
+    <section id="view-profile" class="view">
+      <div class="view-header">
+        <div>
+          <h2 class="view-title">My Profile</h2>
+          <p class="view-subtitle">Manage your account and academic information</p>
+        </div>
+        <button class="btn-outline sm" id="profile-edit-btn" onclick="toggleProfileEdit()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          Edit Profile
+        </button>
+      </div>
+      <div class="profile-layout">
+        <div class="profile-card">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar" id="profile-avatar-display">R</div>
+            <div class="avatar-ring"></div>
+          </div>
+          <div class="profile-name" id="profile-name-display">Rehan Ahmed</div>
+          <div class="profile-email-display" id="profile-email-display">rehan@university.edu</div>
+          <div class="profile-badges">
+            <span class="badge" id="profile-year-badge">2nd Year</span>
+            <span class="badge accent" id="profile-sem-badge">Spring 2026</span>
+          </div>
+          <div class="profile-stats-row">
+            <div class="p-stat"><span id="p-courses">0</span><span>Courses</span></div>
+            <div class="p-stat"><span id="p-tasks-total">0</span><span>Tasks</span></div>
+            <div class="p-stat"><span id="p-progress">0%</span><span>Progress</span></div>
+          </div>
+        </div>
+        <div class="profile-form-card">
+          <div class="profile-section">
+            <h3>Personal Information</h3>
+            <div class="form-row-2">
+              <div class="form-group"><label>First Name</label><input type="text" id="p-fname" class="profile-input" placeholder="First name" disabled/></div>
+              <div class="form-group"><label>Last Name</label><input type="text" id="p-lname" class="profile-input" placeholder="Last name" disabled/></div>
+            </div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="p-email" class="profile-input" placeholder="Email" disabled/></div>
+            <div class="form-group"><label>Student ID</label><input type="text" id="p-sid" class="profile-input" placeholder="e.g. 22i-1234" disabled/></div>
+          </div>
+          <div class="profile-section">
+            <h3>Academic Information</h3>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Academic Year</label>
+                <select id="p-year" class="profile-input" disabled><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+              </div>
+              <div class="form-group">
+                <label>Current Semester</label>
+                <select id="p-semester" class="profile-input" disabled><option>Fall 2025</option><option selected>Spring 2026</option><option>Summer 2026</option></select>
+              </div>
+            </div>
+            <div class="form-group"><label>Department / Program</label><input type="text" id="p-dept" class="profile-input" placeholder="e.g. Computer Science" disabled/></div>
+          </div>
+          <div class="profile-section">
+            <h3>Notification Preferences</h3>
+            <div class="prefs-grid">
+              <label class="pref-option"><input type="checkbox" id="pref-24h" disabled/><span>24-hour reminders</span></label>
+              <label class="pref-option"><input type="checkbox" id="pref-3days" disabled/><span>3-day reminders</span></label>
+              <label class="pref-option"><input type="checkbox" id="pref-7days" disabled/><span>7-day reminders</span></label>
+              <label class="pref-option"><input type="checkbox" id="pref-email-critical" disabled/><span>Email critical alerts only</span></label>
+            </div>
+            <p class="prefs-note">These preferences control the in-app reminders shown in your notification center.</p>
+          </div>
+          <div class="profile-section" id="password-section" style="display:none">
+            <h3>Change Password</h3>
+            <div class="form-group"><label>Current Password</label><input type="password" id="p-cur-pass" class="profile-input" placeholder="Current password"/></div>
+            <div class="form-group"><label>New Password</label><input type="password" id="p-new-pass" class="profile-input" placeholder="New password (min. 8 chars)"/></div>
+          </div>
+          <div class="profile-actions" id="profile-actions" style="display:none">
+            <button class="btn-secondary" onclick="cancelProfileEdit()">Cancel</button>
+            <button class="btn-primary sm" onclick="saveProfile()">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ANALYTICS VIEW ===== -->
+    <section id="view-analytics" class="view">
+      <div class="view-header">
+        <div>
+          <h2 class="view-title">Analytics</h2>
+          <p class="view-subtitle">Track completion, workload, and weekly progress at a glance</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+          <button class="btn-outline sm" onclick="exportTaskData('csv')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Export CSV
+          </button>
+          <button class="btn-primary sm" onclick="exportTaskData('json')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 21h16"/></svg>
+            Export JSON
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-row analytics-row">
+        <div class="stat-card s1">
+          <div class="stat-icon-wrap s1"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="analytics-total-tasks">0</div><div class="stat-label">Total Tasks</div></div>
+        </div>
+        <div class="stat-card s2">
+          <div class="stat-icon-wrap s2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="analytics-completed">0</div><div class="stat-label">Completed</div></div>
+        </div>
+        <div class="stat-card s3">
+          <div class="stat-icon-wrap s3"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="analytics-completion-rate">0%</div><div class="stat-label">Completion Rate</div></div>
+        </div>
+        <div class="stat-card s4">
+          <div class="stat-icon-wrap s4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="stat-info"><div class="stat-val" id="analytics-overdue">0</div><div class="stat-label">Overdue</div></div>
+        </div>
+      </div>
+
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <div class="analytics-card-head">
+            <div>
+              <h3>Weekly workload</h3>
+              <p>Due tasks for the next seven days</p>
+            </div>
+            <span class="analytics-pill" id="analytics-productivity">0%</span>
+          </div>
+          <div id="analytics-week-list" class="analytics-bar-list"></div>
+        </div>
+
+        <div class="analytics-card">
+          <div class="analytics-card-head">
+            <div>
+              <h3>Priority mix</h3>
+              <p>Distribution of task urgency</p>
+            </div>
+            <span class="analytics-pill" id="analytics-courses">0 courses</span>
+          </div>
+          <div id="analytics-priority-list" class="analytics-bar-list"></div>
+        </div>
+
+        <div class="analytics-card">
+          <div class="analytics-card-head">
+            <div>
+              <h3>Task type mix</h3>
+              <p>Assignments, quizzes, projects, and more</p>
+            </div>
+          </div>
+          <div id="analytics-type-list" class="analytics-bar-list"></div>
+        </div>
+
+        <div class="analytics-card wide">
+          <div class="analytics-card-head">
+            <div>
+              <h3>Course performance</h3>
+              <p id="analytics-course-summary">Add courses to see course completion analytics.</p>
+            </div>
+          </div>
+          <div id="analytics-course-list" class="analytics-course-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===== TASK MODAL ===== -->
+<div id="task-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3 id="task-modal-title">Add New Task</h3>
+      </div>
+      <button class="modal-close" onclick="closeTaskModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Task Title <span class="required">*</span></label>
+        <input type="text" id="t-title" placeholder="e.g. Assignment 2 — Linked Lists"/>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="t-desc" rows="3" placeholder="Add details, instructions, or notes…" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:11px 14px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;width:100%;resize:vertical;transition:border-color var(--transition),box-shadow var(--transition);" onfocus="this.style.borderColor='var(--accent)';this.style.boxShadow='0 0 0 3px var(--accent-soft)'" onblur="this.style.borderColor='';this.style.boxShadow=''"></textarea>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Course <span class="required">*</span></label>
+          <select id="t-course">
+            <option value="">Select Course</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Task Type</label>
+          <select id="t-type">
+            <option>Assignment</option>
+            <option>Quiz</option>
+            <option>Project</option>
+            <option>Exam</option>
+            <option>Lab</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Due Date <span class="required">*</span></label>
+          <input type="date" id="t-due"/>
+        </div>
+        <div class="form-group">
+          <label>Priority</label>
+          <select id="t-priority">
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="t-status">
+          <option value="pending">Pending</option>
+          <option value="inprogress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+      <div id="task-modal-error" class="form-error hidden"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeTaskModal()">Cancel</button>
+      <button class="btn-primary sm" id="task-modal-submit" onclick="saveTask()">Add Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COURSE MODAL ===== -->
+<div id="course-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+        <h3 id="modal-title">Add New Course</h3>
+      </div>
+      <button class="modal-close" onclick="closeCourseModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row-2">
+        <div class="form-group"><label>Course Code <span class="required">*</span></label><input type="text" id="c-code" placeholder="e.g. CS-301" style="text-transform:uppercase"/></div>
+        <div class="form-group"><label>Credit Hours</label><input type="number" id="c-credits" placeholder="3" min="1" max="6"/></div>
+      </div>
+      <div class="form-group"><label>Course Name <span class="required">*</span></label><input type="text" id="c-name" placeholder="e.g. Software Engineering"/></div>
+      <div class="form-group"><label>Instructor Name</label><input type="text" id="c-instructor" placeholder="e.g. Dr. Atif Saeed"/></div>
+      <div class="form-row-2">
+        <div class="form-group"><label>Semester</label><select id="c-semester"><option>Fall 2025</option><option selected>Spring 2026</option><option>Summer 2026</option></select></div>
+        <div class="form-group"><label>Schedule (Days)</label><input type="text" id="c-schedule" placeholder="e.g. Mon, Wed, Fri"/></div>
+      </div>
+      <div class="form-group">
+        <label>Course Color</label>
+        <div class="color-picker" id="color-picker">
+          <div class="color-opt selected" data-color="#E84855" style="background:#E84855"></div>
+          <div class="color-opt" data-color="#3D52D5" style="background:#3D52D5"></div>
+          <div class="color-opt" data-color="#F4A261" style="background:#F4A261"></div>
+          <div class="color-opt" data-color="#2DC653" style="background:#2DC653"></div>
+          <div class="color-opt" data-color="#9B5DE5" style="background:#9B5DE5"></div>
+          <div class="color-opt" data-color="#F72585" style="background:#F72585"></div>
+          <div class="color-opt" data-color="#4CC9F0" style="background:#4CC9F0"></div>
+          <div class="color-opt" data-color="#FB8500" style="background:#FB8500"></div>
+        </div>
+      </div>
+      <div id="course-modal-error" class="form-error hidden"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeCourseModal()">Cancel</button>
+      <button class="btn-primary sm" id="modal-submit-btn" onclick="saveCourse()">Add Course</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div id="delete-modal" class="modal-overlay hidden">
+  <div class="modal sm">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-icon danger"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></div>
+        <h3 id="delete-modal-title">Delete Item</h3>
+      </div>
+      <button class="modal-close" onclick="closeDeleteModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete <strong id="delete-item-name"></strong>? This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn-danger" onclick="confirmDelete()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
